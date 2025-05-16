@@ -21,16 +21,16 @@ public class SecurityConfig {
         http
                 .securityMatcher("/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers( "/css/**", "/js/**", "/images/**", "/login.html/**").permitAll()
+                        .requestMatchers( "/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
-                        .loginPage("/login.html")
+                        .loginPage("/login")
                         .defaultSuccessUrl("/dashboard", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login.html?logout")
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );
 
