@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Izbor uloge</title>
+</head>
+<body>
+<h2>Izaberi ulogu</h2>
+
+<form th:action="@{/choose-role}" method="post">
+  <button type="submit" name="role" value="MEMBER">Postani član</button>
+  <button type="submit" name="role" value="TRAINER">Postani trener</button>
+</form>
+
+</body>
+</html>

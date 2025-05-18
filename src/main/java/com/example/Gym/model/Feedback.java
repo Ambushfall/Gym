@@ -4,28 +4,37 @@ import jakarta.persistence.*;
 
 @Entity
 public class Feedback {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String comment;
-    private Integer rating;
-
-    @ManyToOne
-    private Member member;
+    private String content;
+    private int rating;
 
     public Feedback() {}
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getComment() { return comment; }
-    public void setComment(String comment) { this.comment = comment; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Integer getRating() { return rating; }
-    public void setRating(Integer rating) { this.rating = rating; }
+    public String getContent() { // ✅ mora postojati
+        return content;
+    }
 
-    public Member getMember() { return member; }
-    public void setMember(Member member) { this.member = member; }
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 }
-

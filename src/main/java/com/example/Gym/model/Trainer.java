@@ -1,7 +1,6 @@
 package com.example.Gym.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -12,16 +11,16 @@ public class Trainer {
     private Long id;
 
     private String name;
-    private String specialty;
+    private String specialization;
 
     @OneToMany(mappedBy = "trainer")
     private List<TrainingSession> sessions;
 
-    // --- Konstruktor bez argumenata (obavezan za JPA) ---
+    @OneToOne
+    private AppUser appUser; // ✅ Dodato za povezivanje sa login korisnikom
+
     public Trainer() {
     }
-
-    // --- Getteri i setteri ---
 
     public Long getId() {
         return id;
@@ -39,12 +38,12 @@ public class Trainer {
         this.name = name;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public String getSpecialization() {
+        return specialization;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
     }
 
     public List<TrainingSession> getSessions() {
@@ -53,5 +52,13 @@ public class Trainer {
 
     public void setSessions(List<TrainingSession> sessions) {
         this.sessions = sessions;
+    }
+
+    public AppUser getAppUser() {
+        return appUser;
+    }
+
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 }

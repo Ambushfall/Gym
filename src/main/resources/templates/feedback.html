@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Feedback Management</title></head>
+<body>
+
+<h2>All Feedback</h2>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Content</th><th>Rating</th><th>Actions</th>
+    </tr>
+    <tr th:each="feedback : ${feedbacks}">
+        <td th:text="${feedback.id}"></td>
+        <td th:text="${feedback.content}"></td>
+        <td th:text="${feedback.rating}"></td>
+        <td>
+            <a th:href="@{'/feedback/edit/' + ${feedback.id}}">Edit</a>
+            <a th:href="@{'/feedback/delete/' + ${feedback.id}}" onclick="return confirm('Delete?')">Delete</a>
+        </td>
+    </tr>
+</table>
+
+<hr>
+<h2 th:text="${feedbackForm.id != null} ? 'Edit Feedback' : 'Add Feedback'"></h2>
+<form th:action="@{${feedbackForm.id != null} ? '/feedback/edit/' + ${feedbackForm.id} : '/feedback/add'}" th:object="${feedbackForm}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <label>Content:</label><input type="text" th:field="*{content}" required/><br/>
+    <label>Rating:</label><input type="number" th:field="*{rating}" required/><br/>
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

@@ -2,40 +2,54 @@ package com.example.Gym.controller;
 
 import com.example.Gym.model.Trainer;
 import com.example.Gym.repository.TrainerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/trainers")
+@Controller
+@RequestMapping("/trainers")
 public class TrainerController {
 
-    @Autowired
-    private TrainerRepository TrainerRepository;
+    private final TrainerRepository trainerRepository;
+
+    public TrainerController(TrainerRepository trainerRepository) {
+        this.trainerRepository = trainerRepository;
+    }
 
     @GetMapping
-    public List<Trainer> getAll() {
-        return TrainerRepository.findAll();
+    public String list(Model model) {
+        model.addAttribute("trainers", trainerRepository.findAll());
+        model.addAttribute("trainerForm", new Trainer());
+        return "trainer";
     }
 
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public Trainer create(@RequestBody Trainer t) {
-        return TrainerRepository.save(t);
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        model.addAttribute("trainers", trainerRepository.findAll());
+        model.addAttribute("trainerForm", trainerRepository.findById(id).orElse(new Trainer()));
+        return "trainer";
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public Trainer update(@PathVariable Long id, @RequestBody Trainer t) {
-        t.setId(id);
-        return TrainerRepository.save(t);
+    public String add(@ModelAttribute("trainerForm") Trainer trainer) {
+        trainerRepository.save(trainer);
+        return "redirect:/trainers";
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void delete(@PathVariable Long id) {
-        TrainerRepository.deleteById(id);
+    public String update(@PathVariable Long id, @ModelAttribute("trainerForm") Trainer trainer) {
+        trainer.setId(id);
+        trainerRepository.save(trainer);
+        return "redirect:/trainers";
+    }
+
+    @GetMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String delete(@PathVariable Long id) {
+        trainerRepository.deleteById(id);
+        return "redirect:/trainers";
     }
 }

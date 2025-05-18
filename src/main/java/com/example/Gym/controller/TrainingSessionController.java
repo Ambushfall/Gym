@@ -2,34 +2,50 @@ package com.example.Gym.controller;
 
 import com.example.Gym.model.TrainingSession;
 import com.example.Gym.repository.TrainingSessionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
-
-@RequestMapping("/api/sessions")
+@Controller
+@RequestMapping("/session")
 public class TrainingSessionController {
-    @Autowired
-    private TrainingSessionRepository trainingSessionRepository;
+
+    private final TrainingSessionRepository trainingSessionRepository;
+
+    public TrainingSessionController(TrainingSessionRepository trainingSessionRepository) {
+        this.trainingSessionRepository = trainingSessionRepository;
+    }
 
     @GetMapping
-    public List<TrainingSession> getAll() {
-        return trainingSessionRepository.findAll();
+    public String list(Model model) {
+        model.addAttribute("sessions", trainingSessionRepository.findAll());
+        model.addAttribute("sessionForm", new TrainingSession());
+        return "session";
     }
 
-    @PostMapping
-    public TrainingSession create(@RequestBody TrainingSession session) {
-        return trainingSessionRepository.save(session);
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        model.addAttribute("sessions", trainingSessionRepository.findAll());
+        model.addAttribute("sessionForm", trainingSessionRepository.findById(id).orElse(new TrainingSession()));
+        return "session";
     }
 
-    @PutMapping("/{id}")
-    public TrainingSession update(@PathVariable Long id, @RequestBody TrainingSession session) {
+    @PostMapping("/add")
+    public String add(@ModelAttribute("sessionForm") TrainingSession session) {
+        trainingSessionRepository.save(session);
+        return "redirect:/sessions";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(@PathVariable Long id, @ModelAttribute("sessionForm") TrainingSession session) {
         session.setId(id);
-        return trainingSessionRepository.save(session);
+        trainingSessionRepository.save(session);
+        return "redirect:/sessions";
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
         trainingSessionRepository.deleteById(id);
+        return "redirect:/sessions";
     }
 }

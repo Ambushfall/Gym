@@ -2,42 +2,50 @@ package com.example.Gym.controller;
 
 import com.example.Gym.model.Feedback;
 import com.example.Gym.repository.FeedbackRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.Optional;
 
-
-
-@RequestMapping("/api/feedback")
+@Controller
+@RequestMapping("/feedback")
 public class FeedbackController {
-    @Autowired
-    private FeedbackRepository feedbackRepository;
+
+    private final FeedbackRepository feedbackRepository;
+
+    public FeedbackController(FeedbackRepository feedbackRepository) {
+        this.feedbackRepository = feedbackRepository;
+    }
 
     @GetMapping
-    public List<Feedback> getAll() {
-        return feedbackRepository.findAll();
+    public String list(Model model) {
+        model.addAttribute("feedbacks", feedbackRepository.findAll());
+        model.addAttribute("feedbackForm", new Feedback());
+        return "feedback";
     }
 
-    @GetMapping("/{id}")
-    public Optional<Feedback> findByID(@PathVariable Long id) {
-        return feedbackRepository.findById(id);
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        model.addAttribute("feedbacks", feedbackRepository.findAll());
+        model.addAttribute("feedbackForm", feedbackRepository.findById(id).orElse(new Feedback()));
+        return "feedback";
     }
 
-    @PostMapping
-    public Feedback create(@RequestBody Feedback feedback) {
-        return feedbackRepository.save(feedback);
+    @PostMapping("/add")
+    public String add(@ModelAttribute("feedbackForm") Feedback feedback) {
+        feedbackRepository.save(feedback);
+        return "redirect:/feedback";
     }
 
-    @PutMapping("/{id}")
-    public Feedback update(@PathVariable Long id, @RequestBody Feedback feedback) {
+    @PostMapping("/edit/{id}")
+    public String update(@PathVariable Long id, @ModelAttribute("feedbackForm") Feedback feedback) {
         feedback.setId(id);
-        return feedbackRepository.save(feedback);
+        feedbackRepository.save(feedback);
+        return "redirect:/feedback";
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
         feedbackRepository.deleteById(id);
+        return "redirect:/feedback";
     }
 }
-

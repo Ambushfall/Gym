@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+</head>
+<body>
+
+<h2>All Users</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Liked Trainers</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.role}"></td>
+        <td>
+            <ul>
+                <li th:each="trainer : ${user.likedTrainers}" th:text="${trainer.name}"></li>
+            </ul>
+        </td>
+        <td>
+            <a th:href="@{'/users/edit/' + ${user.id}}">Edit</a>
+            <a th:href="@{'/users/delete/' + ${user.id}}" onclick="return confirm('Delete?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2 th:text="${userForm.id != null} ? 'Edit User' : 'Add User'"></h2>
+
+<form th:action="@{${userForm.id != null} ? '/users/edit/' + ${userForm.id} : '/users/add'}"
+      th:object="${userForm}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Username:</label>
+    <input type="text" th:field="*{username}" required/><br/>
+
+    <label>Email:</label>
+    <input type="email" th:field="*{email}" required/><br/>
+
+    <label>Password:</label>
+    <input type="password" th:field="*{password}" required/><br/>
+
+    <label>Role:</label>
+    <select th:field="*{role}">
+        <option value="USER">USER</option>
+        <option value="ADMIN">ADMIN</option>
+    </select><br/>
+
+
+    <label>Liked Trainers:</label><br/>
+    <div th:each="trainer : ${allTrainers}">
+        <input type="checkbox" th:value="${trainer.id}"
+               th:field="*{likedTrainers}" th:text="${trainer.name}" />
+        <br/>
+    </div>
+
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

@@ -2,34 +2,50 @@ package com.example.Gym.controller;
 
 import com.example.Gym.model.AppUser;
 import com.example.Gym.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
-@RequestMapping("/api/users")
+@Controller
+@RequestMapping("/users")
 public class UserController {
-    @Autowired
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
+
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping
-    public List<AppUser> getAll() {
-        return userRepository.findAll();
+    public String list(Model model) {
+        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("userForm", new AppUser());
+        return "user";
     }
 
-    @PostMapping
-    public AppUser create(@RequestBody AppUser user) {
-        return userRepository.save(user);
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("userForm", userRepository.findById(id).orElse(new AppUser()));
+        return "user";
     }
 
-    @PutMapping("/{id}")
-    public AppUser update(@PathVariable Long id, @RequestBody AppUser user) {
+    @PostMapping("/add")
+    public String add(@ModelAttribute("userForm") AppUser user) {
+        userRepository.save(user);
+        return "redirect:/users";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(@PathVariable Long id, @ModelAttribute("userForm") AppUser user) {
         user.setId(id);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return "redirect:/users";
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
         userRepository.deleteById(id);
+        return "redirect:/users";
     }
 }

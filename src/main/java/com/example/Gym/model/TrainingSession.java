@@ -5,12 +5,14 @@ import java.time.LocalDateTime;
 
 @Entity
 public class TrainingSession {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
-    private LocalDateTime time;
+    private String description;
+    private String date;
 
     @ManyToOne
     private Trainer trainer;
@@ -26,8 +28,11 @@ public class TrainingSession {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
-    public LocalDateTime getTime() { return time; }
-    public void setTime(LocalDateTime time) { this.time = time; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
 
     public Trainer getTrainer() { return trainer; }
     public void setTrainer(Trainer trainer) { this.trainer = trainer; }
@@ -35,3 +40,4 @@ public class TrainingSession {
     public Member getMember() { return member; }
     public void setMember(Member member) { this.member = member; }
 }
+

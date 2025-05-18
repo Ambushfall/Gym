@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+</head>
+<body>
+
+<h1>Dobrodošao, <span th:text="${username}">korisnik</span>!</h1>
+<h2>Uloga: <span th:text="${role}">uloga</span></h2>
+
+<div th:switch="${role}">
+
+  <!-- ADMIN SEKCIONI SADRŽAJ -->
+  <div th:case="'ADMIN'">
+    <h3>Admin Panel</h3>
+    <ul>
+      <li><a th:href="@{/admin/users}">Pregled svih korisnika</a></li>
+      <li><a th:href="@{/admin/settings}">Podešavanja sistema</a></li>
+    </ul>
+  </div>
+
+  <!-- TRAINER SEKCIONI SADRŽAJ -->
+  <div th:case="'TRAINER'">
+    <h3>Trener Panel</h3>
+    <ul>
+      <li><a th:href="@{/trainer/sessions}">Moje trening sesije</a></li>
+      <li><a th:href="@{/trainer/members}">Moji članovi</a></li>
+    </ul>
+  </div>
+
+  <!-- MEMBER SEKCIONI SADRŽAJ -->
+  <div th:case="'MEMBER'">
+    <h3>Član Panel</h3>
+    <ul>
+      <li><a th:href="@{/member/trainers}">Pregled trenera</a></li>
+      <li><a th:href="@{/member/sessions}">Trening sesije</a></li>
+    </ul>
+  </div>
+
+  <!-- DEFAULT -->
+  <div th:case="*">
+    <p>Nepoznata uloga. Pristup nije dozvoljen.</p>
+  </div>
+</div>
+
+<p><a th:href="@{/logout}">Odjavi se</a></p>
+
+</body>
+</html>
