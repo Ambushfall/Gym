@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://thymeleaf.org">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+  <head>
     <title>Login</title>
-</head>
-<body>
-<h2>Login</h2>
-<form th:action="@{/login}" method="post">
-    <label>Username:</label>
-    <input type="text" name="username"/><br/>
-    <label>Password:</label>
-    <input type="password" name="password"/><br/>
-    <button type="submit">Login</button>
-</form>
-</body>
+  </head>
+  <body>
+    <h2>Login</h2>
+    <label for="register"
+      >Invalid username and password. Do you want to register?</label
+    >
+    <form th:action="@{/login}" method="post">
+      <label>Username:</label>
+      <input type="text" name="username" /><br />
+      <label>Password:</label>
+      <input type="password" name="password" /><br />
+      <button type="submit">Login</button>
+    </form>
+    <form th:if="${param.error}" th:action="@{/register}" method="get">
+      <input type="submit" id="register" value="Register" />
+    </form>
+  </body>
 </html>
