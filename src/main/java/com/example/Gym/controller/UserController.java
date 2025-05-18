@@ -1,6 +1,6 @@
 package com.example.Gym.controller;
 
-import com.example.Gym.model.User;
+import com.example.Gym.model.AppUser;
 import com.example.Gym.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,17 +13,17 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<User> getAll() {
+    public List<AppUser> getAll() {
         return userRepository.findAll();
     }
 
     @PostMapping
-    public User create(@RequestBody User user) {
+    public AppUser create(@RequestBody AppUser user) {
         return userRepository.save(user);
     }
 
     @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @RequestBody User user) {
+    public AppUser update(@PathVariable Long id, @RequestBody AppUser user) {
         user.setId(id);
         return userRepository.save(user);
     }

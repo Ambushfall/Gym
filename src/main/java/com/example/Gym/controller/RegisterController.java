@@ -1,6 +1,6 @@
 package com.example.Gym.controller;
 
-import com.example.Gym.model.User;
+import com.example.Gym.model.AppUser;
 import com.example.Gym.model.Role;
 import com.example.Gym.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +22,13 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String processRegistration(@RequestParam String username,
-                                      @RequestParam String password
-    ) {
-
-        User user = new User();
+    public String processRegistration(@RequestParam String username, @RequestParam String password) {
+        AppUser user = new AppUser();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
+        user.setRole(Role.USER);
         userRepository.save(user);
 
         return "redirect:/login?registered";
     }
 }
-
