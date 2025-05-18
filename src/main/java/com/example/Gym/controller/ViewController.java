@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ViewController {
 
-//    @GetMapping("/login")
-//    public String loginPage() {
-//        return "login.html"; // Thymeleaf će prikazati login.html
-//    }
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
 
     @GetMapping("/dashboard")
     public String dashboard() {
