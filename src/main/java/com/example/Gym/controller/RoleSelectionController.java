@@ -2,11 +2,12 @@ package com.example.Gym.controller;
 
 import com.example.Gym.model.AppUser;
 import com.example.Gym.model.Member;
-import com.example.Gym.model.Trainer;
 import com.example.Gym.model.Role;
-import com.example.Gym.repository.UserRepository;
+import com.example.Gym.model.Trainer;
 import com.example.Gym.repository.MemberRepository;
 import com.example.Gym.repository.TrainerRepository;
+import com.example.Gym.repository.UserRepository;
+import com.example.Gym.services.UserRoleRefresherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,9 @@ public class RoleSelectionController {
     @Autowired
     private TrainerRepository trainerRepository;
 
+    @Autowired
+    private UserRoleRefresherService roleRefresherService;
+
     @PostMapping("/choose-role")
     public String setUserRole(@RequestParam("role") String role, Principal principal) {
         AppUser user = userRepository.findByUsername(principal.getName())
@@ -34,6 +38,7 @@ public class RoleSelectionController {
         if (role.equals("MEMBER")) {
             user.setRole(Role.MEMBER);
             userRepository.save(user);
+            roleRefresherService.updateUserRoleInSession(user);
 
             Optional<Member> existingMember = memberRepository.findByAppUser(user);
             if (existingMember.isEmpty()) {
@@ -43,11 +48,12 @@ public class RoleSelectionController {
                 memberRepository.save(member);
             }
 
-            return "redirect:/member/dashboard";
+//            return "redirect:/member/dashboard";
 
         } else if (role.equals("TRAINER")) {
             user.setRole(Role.TRAINER);
             userRepository.save(user);
+            roleRefresherService.updateUserRoleInSession(user);
 
             Optional<Trainer> existingTrainer = trainerRepository.findByAppUser(user);
             if (existingTrainer.isEmpty()) {
@@ -57,14 +63,21 @@ public class RoleSelectionController {
                 trainerRepository.save(trainer);
             }
 
-            return "redirect:/trainer/dashboard";
+//            return "redirect:/trainer/dashboard";
         }
 
-        return "redirect:/login?error";
+       return "redirect:/" + role + "/dashboard";
     }
 
     @GetMapping("/choose-role")
-    public String showRolePage() {
+    public String showRolePage(Principal principal) {
+        AppUser user = userRepository.findByUsername(principal.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user.getRole() != Role.USER) {
+//            return "redirect:/dashboard";
+        }
+
         return "choose-role";
     }
 }

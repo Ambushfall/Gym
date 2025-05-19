@@ -19,10 +19,15 @@ public class Member {
     private List<TrainingSession> sessions;
 
     @ManyToMany
+    @JoinTable(
+            name = "member_liked_trainers",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "trainer_id")
+    )
     private List<Trainer> likedTrainers;
 
     @OneToOne
-    private AppUser appUser; // ✅ Dodato za vezu sa korisnikom
+    private AppUser appUser;
 
     public Member() {
     }

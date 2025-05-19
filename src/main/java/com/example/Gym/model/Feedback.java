@@ -12,6 +12,10 @@ public class Feedback {
     private String content;
     private int rating;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     public Feedback() {}
 
     public Long getId() {
@@ -22,7 +26,7 @@ public class Feedback {
         this.id = id;
     }
 
-    public String getContent() { // ✅ mora postojati
+    public String getContent() {
         return content;
     }
 
@@ -36,5 +40,13 @@ public class Feedback {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 }

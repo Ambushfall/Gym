@@ -16,6 +16,9 @@ public class Trainer {
     @OneToMany(mappedBy = "trainer")
     private List<TrainingSession> sessions;
 
+    @ManyToMany(mappedBy = "likedTrainers")
+    private List<Member> likedByMembers;
+
     @OneToOne
     private AppUser appUser; // ✅ Dodato za povezivanje sa login korisnikom
 
@@ -52,6 +55,14 @@ public class Trainer {
 
     public void setSessions(List<TrainingSession> sessions) {
         this.sessions = sessions;
+    }
+
+    public List<Member> getLikedByMembers() {
+        return likedByMembers;
+    }
+
+    public void setLikedByMembers(List<Member> likedByMembers) {
+        this.likedByMembers = likedByMembers;
     }
 
     public AppUser getAppUser() {
