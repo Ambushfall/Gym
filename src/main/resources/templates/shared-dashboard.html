@@ -13,10 +13,168 @@
 
   <!-- ADMIN SEKCIONI SADRŽAJ -->
   <div th:case="'ADMIN'">
-    <h3>Admin Panel</h3>
+    <h3>ADMIN: Korisnici</h3>
+    <table>
+      <tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.role}"></td>
+        <td>
+          <a th:href="@{'/users/edit/' + ${user.id}}">Edit</a>
+          <a th:href="@{'/users/delete/' + ${user.id}}" onclick="return confirm('Delete?')">Delete</a>
+        </td>
+      </tr>
+    </table>
+    <form th:action="@{${userForm.id != null} ? '/users/edit/' + ${userForm.id} : '/users/add'}" th:object="${userForm}" method="post">
+      <input type="hidden" th:field="*{id}" />
+      <input type="text" th:field="*{username}" placeholder="Username" required />
+      <input type="email" th:field="*{email}" placeholder="Email" required />
+      <input type="password" th:field="*{password}" placeholder="Password" required />
+      <select th:field="*{role}">
+        <option value="USER">USER</option>
+        <option value="ADMIN">ADMIN</option>
+        <option value="TRAINER">TRAINER</option>
+        <option value="MEMBER">MEMBER</option>
+      </select>
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+  <!-- MEMBERS -->
+  <div>
+    <h3>ADMIN: Članovi</h3>
+    <table>
+      <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Membership</th><th>Actions</th></tr>
+      <tr th:each="m : ${members}">
+        <td th:text="${m.id}"></td>
+        <td th:text="${m.name}"></td>
+        <td th:text="${m.email}"></td>
+        <td th:text="${m.phoneNumber}"></td>
+        <td th:text="${m.membershipType}"></td>
+        <td>
+          <a th:href="@{'/members/edit/' + ${m.id}}">Edit</a>
+          <a th:href="@{'/members/delete/' + ${m.id}}" onclick="return confirm('Delete?')">Delete</a>
+        </td>
+      </tr>
+    </table>
+    <form th:action="@{${memberForm.id != null} ? '/members/edit/' + ${memberForm.id} : '/members/add'}" th:object="${memberForm}" method="post">
+      <input type="hidden" th:field="*{id}" />
+      <input type="text" th:field="*{name}" placeholder="Name" required />
+      <input type="email" th:field="*{email}" placeholder="Email" required />
+      <input type="text" th:field="*{phoneNumber}" placeholder="Phone" required />
+      <input type="text" th:field="*{membershipType}" placeholder="Membership" required />
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+  <!-- TRAINERS -->
+  <div>
+    <h3>ADMIN: Treneri</h3>
+    <table>
+      <tr><th>ID</th><th>Name</th><th>Specialization</th><th>Actions</th></tr>
+      <tr th:each="trainer : ${trainers}">
+        <td th:text="${trainer.id}"></td>
+        <td th:text="${trainer.name}"></td>
+        <td th:text="${trainer.specialization}"></td>
+        <td>
+          <a th:href="@{'/trainers/edit/' + ${trainer.id}}">Edit</a>
+          <a th:href="@{'/trainers/delete/' + ${trainer.id}}" onclick="return confirm('Delete?')">Delete</a>
+        </td>
+      </tr>
+    </table>
+    <form th:action="@{${trainerForm.id != null} ? '/trainers/edit/' + ${trainerForm.id} : '/trainers/add'}" th:object="${trainerForm}" method="post">
+      <input type="hidden" th:field="*{id}" />
+      <input type="text" th:field="*{name}" placeholder="Name" required />
+      <input type="text" th:field="*{specialization}" placeholder="Specialization" required />
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+  <!-- SESSIONS -->
+  <div>
+    <h3>ADMIN: Trening sesije</h3>
+    <table>
+      <tr><th>ID</th><th>Title</th><th>Description</th><th>Date</th><th>Actions</th></tr>
+      <tr th:each="s : ${sessions}">
+        <td th:text="${s.id}"></td>
+        <td th:text="${s.title}"></td>
+        <td th:text="${s.description}"></td>
+        <td th:text="${s.date}"></td>
+        <td>
+          <a th:href="@{'/sessions/edit/' + ${s.id}}">Edit</a>
+          <a th:href="@{'/sessions/delete/' + ${s.id}}" onclick="return confirm('Delete?')">Delete</a>
+        </td>
+      </tr>
+    </table>
+    <form th:action="@{${sessionsForm.id != null} ? '/sessions/edit/' + ${sessionsForm.id} : '/sessions/add'}" th:object="${sessionsForm}" method="post">
+      <input type="hidden" th:field="*{id}" />
+      <input type="text" th:field="*{title}" placeholder="Title" required />
+      <input type="text" th:field="*{description}" placeholder="Description" required />
+      <input type="text" th:field="*{date}" placeholder="Date" required />
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+  <!-- FEEDBACK -->
+  <div>
+    <h3>ADMIN: Feedback</h3>
+    <table>
+      <tr><th>ID</th><th>Content</th><th>Rating</th><th>Actions</th></tr>
+      <tr th:each="f : ${feedbacks}">
+        <td th:text="${f.id}"></td>
+        <td th:text="${f.content}"></td>
+        <td th:text="${f.rating}"></td>
+        <td>
+          <a th:href="@{'/feedback/edit/' + ${f.id}}">Edit</a>
+          <a th:href="@{'/feedback/delete/' + ${f.id}}" onclick="return confirm('Delete?')">Delete</a>
+        </td>
+      </tr>
+    </table>
+    <form th:action="@{${feedbackForm.id != null} ? '/feedback/edit/' + ${feedbackForm.id} : '/feedback/add'}" th:object="${feedbackForm}" method="post">
+      <input type="hidden" th:field="*{id}" />
+      <input type="text" th:field="*{content}" placeholder="Content" required />
+      <input type="number" min="1" max="5" th:field="*{rating}" placeholder="Rating" required />
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+  <!-- ======================= TRAINER PANEL ======================= -->
+  <div th:case="'TRAINER'">
+    <h2>Trener – Moje trening sesije</h2>
+    <table border="1">
+      <tr><th>ID</th><th>Title</th><th>Description</th><th>Date</th></tr>
+      <tr th:each="s : ${mySessions}">
+        <td th:text="${s.id}"></td>
+        <td th:text="${s.title}"></td>
+        <td th:text="${s.description}"></td>
+        <td th:text="${s.date}"></td>
+      </tr>
+    </table>
+
+    <h2>Ocene i komentari</h2>
     <ul>
-      <li><a th:href="@{/admin/users}">Pregled svih korisnika</a></li>
-      <li><a th:href="@{/admin/settings}">Podešavanja sistema</a></li>
+      <li th:each="f : ${myFeedbacks}">
+        Od <b th:text="${f.member.name}"></b>: "<span th:text="${f.content}"></span>" (<span th:text="${f.rating}"></span>/5)
+      </li>
+    </ul>
+  </div>
+
+  <!-- ======================= MEMBER PANEL ======================= -->
+  <div th:case="'MEMBER'">
+    <h2>Dostupni treneri</h2>
+    <ul>
+      <li th:each="t : ${allTrainers}">
+        <span th:text="${t.name}"></span> — <span th:text="${t.specialization}"></span>
+      </li>
+    </ul>
+
+    <h2>Treneri koje si lajkovao</h2>
+    <ul>
+      <li th:each="lt : ${likedTrainers}">
+        <span th:text="${lt.name}"></span>
+      </li>
     </ul>
   </div>
 
