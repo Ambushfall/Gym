@@ -12,25 +12,38 @@ import java.util.List;
 @Component
 public class DataInitializer implements CommandLineRunner {
 
-    @Autowired private UserRepository userRepository;
-    @Autowired private TrainerRepository trainerRepository;
-    @Autowired private MemberRepository memberRepository;
-    @Autowired private TrainingSessionRepository trainingSessionRepository;
-    @Autowired private FeedbackRepository feedbackRepository;
-    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private TrainerRepository trainerRepository;
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private TrainingSessionRepository trainingSessionRepository;
+    @Autowired
+    private FeedbackRepository feedbackRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) {
-        if (userRepository.count() > 0) return; // ne radi ništa ako već postoji nešto
+        if (userRepository.count() > 0) return;
 
         // 1. User-i
         for (int i = 1; i <= 5; i++) {
             AppUser user = new AppUser();
             user.setUsername("user" + i);
             user.setPassword(passwordEncoder.encode("password" + i));
-            user.setRole(Role.USER); // svi kao USER, mogu kasnije da izaberu MEMBER/TRENER
+            user.setRole(Role.USER);
             userRepository.save(user);
         }
+
+        // ✅ ADMIN USER
+        AppUser admin = new AppUser();
+        admin.setUsername("admin");
+        admin.setPassword(passwordEncoder.encode("admin"));
+        admin.setRole(Role.ADMIN);
+        userRepository.save(admin);
 
         // 2. Treneri
         for (int i = 1; i <= 5; i++) {
@@ -81,6 +94,7 @@ public class DataInitializer implements CommandLineRunner {
             feedback.setContent("Komentar " + i);
             feedback.setRating(i % 5 + 1);
             feedback.setMember(members.get(i % members.size()));
+            feedback.setTrainer(trainers.get(i % trainers.size())); // dodato trener!
             feedbackRepository.save(feedback);
         }
 

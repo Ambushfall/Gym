@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Training sessions Management</title></head>
+<body>
+
+<h2>All sessions</h2>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Title</th><th>Description</th><th>Date</th><th>Actions</th>
+    </tr>
+    <tr th:each="sessions : ${sessions}">
+        <td th:text="${sessions.id}"></td>
+        <td th:text="${sessions.title}"></td>
+        <td th:text="${sessions.description}"></td>
+        <td th:text="${sessions.date}"></td>
+        <td>
+            <a th:href="@{'/sessions/edit/' + ${sessions.id}}">Edit</a>
+            <a th:href="@{'/sessions/delete/' + ${sessions.id}}" onclick="return confirm('Delete?')">Delete</a>
+        </td>
+    </tr>
+</table>
+
+<hr>
+<h2 th:text="${sessionsForm.id != null} ? 'Edit sessions' : 'Add sessions'"></h2>
+<form th:action="@{${sessionsForm.id != null} ? '/sessions/edit/' + ${sessionsForm.id} : '/sessions/add'}" th:object="${sessionsForm}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <label>Title:</label><input type="text" th:field="*{title}" required/><br/>
+    <label>Description:</label><input type="text" th:field="*{description}" required/><br/>
+    <label>Date:</label><input type="text" th:field="*{date}" required/><br/>
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

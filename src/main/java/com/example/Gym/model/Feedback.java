@@ -16,6 +16,10 @@ public class Feedback {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @ManyToOne
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
+
     public Feedback() {}
 
     public Long getId() {
@@ -48,5 +52,13 @@ public class Feedback {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public Trainer getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
     }
 }

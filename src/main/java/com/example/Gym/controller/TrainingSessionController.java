@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/session")
+@RequestMapping("/sessions")
 public class TrainingSessionController {
 
     private final TrainingSessionRepository trainingSessionRepository;
@@ -19,27 +19,27 @@ public class TrainingSessionController {
     @GetMapping
     public String list(Model model) {
         model.addAttribute("sessions", trainingSessionRepository.findAll());
-        model.addAttribute("sessionForm", new TrainingSession());
-        return "session";
+        model.addAttribute("sessionsForm", new TrainingSession());
+        return "sessions";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("sessions", trainingSessionRepository.findAll());
-        model.addAttribute("sessionForm", trainingSessionRepository.findById(id).orElse(new TrainingSession()));
-        return "session";
+        model.addAttribute("sessionsForm", trainingSessionRepository.findById(id).orElse(new TrainingSession()));
+        return "sessions";
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("sessionForm") TrainingSession session) {
-        trainingSessionRepository.save(session);
+    public String add(@ModelAttribute("sessionsForm") TrainingSession sessions) {
+        trainingSessionRepository.save(sessions);
         return "redirect:/sessions";
     }
 
     @PostMapping("/edit/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("sessionForm") TrainingSession session) {
-        session.setId(id);
-        trainingSessionRepository.save(session);
+    public String update(@PathVariable Long id, @ModelAttribute("sessionsForm") TrainingSession sessions) {
+        sessions.setId(id);
+        trainingSessionRepository.save(sessions);
         return "redirect:/sessions";
     }
 
