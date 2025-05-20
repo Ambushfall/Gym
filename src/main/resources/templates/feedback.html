@@ -13,8 +13,8 @@
         <td th:text="${feedback.content}"></td>
         <td th:text="${feedback.rating}"></td>
         <td>
-            <a th:href="@{'/feedback/edit/' + ${feedback.id}}">Edit</a>
-            <a th:href="@{'/feedback/delete/' + ${feedback.id}}" onclick="return confirm('Delete?')">Delete</a>
+            <a th:href="@{'/admin/feedback/edit/' + ${feedback.id}}">Edit</a>
+            <a th:href="@{'/admin/feedback/delete/' + ${feedback.id}}" onclick="return confirm('Delete?')">Delete</a>
         </td>
     </tr>
 </table>

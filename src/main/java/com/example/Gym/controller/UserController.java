@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/admin/users")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -38,7 +38,7 @@ public class UserController {
     @PostMapping("/add")
     public String add(@ModelAttribute("userForm") AppUser user) {
         userRepository.save(user);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
     @PostMapping("/edit/{id}")
@@ -46,12 +46,12 @@ public class UserController {
         user.setId(id);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         userRepository.deleteById(id);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 }

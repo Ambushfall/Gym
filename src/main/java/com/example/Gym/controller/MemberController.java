@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/members")
+@RequestMapping("/admin/members")
 public class MemberController {
 
     private final MemberRepository memberRepository;
@@ -33,19 +33,19 @@ public class MemberController {
     @PostMapping("/add")
     public String add(@ModelAttribute("memberForm") Member member) {
         memberRepository.save(member);
-        return "redirect:/members";
+        return "redirect:/admin/members";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable Long id, @ModelAttribute("memberForm") Member member) {
         member.setId(id);
         memberRepository.save(member);
-        return "redirect:/members";
+        return "redirect:/admin/members";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         memberRepository.deleteById(id);
-        return "redirect:/members";
+        return "redirect:/admin/members";
     }
 }

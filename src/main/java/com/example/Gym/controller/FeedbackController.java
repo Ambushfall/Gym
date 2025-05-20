@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/feedback")
+@RequestMapping("/admin/feedback")
 public class FeedbackController {
 
     private final FeedbackRepository feedbackRepository;
@@ -33,19 +33,19 @@ public class FeedbackController {
     @PostMapping("/add")
     public String add(@ModelAttribute("feedbackForm") Feedback feedback) {
         feedbackRepository.save(feedback);
-        return "redirect:/feedback";
+        return "redirect:/admin/feedback";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable Long id, @ModelAttribute("feedbackForm") Feedback feedback) {
         feedback.setId(id);
         feedbackRepository.save(feedback);
-        return "redirect:/feedback";
+        return "redirect:/admin/feedback";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         feedbackRepository.deleteById(id);
-        return "redirect:/feedback";
+        return "redirect:/admin/feedback";
     }
 }

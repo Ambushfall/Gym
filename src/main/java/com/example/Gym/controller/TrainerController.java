@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/trainers")
+@RequestMapping("/admin/trainers")
 public class TrainerController {
 
     private final TrainerRepository trainerRepository;
@@ -35,7 +35,7 @@ public class TrainerController {
     @PreAuthorize("hasRole('ADMIN')")
     public String add(@ModelAttribute("trainerForm") Trainer trainer) {
         trainerRepository.save(trainer);
-        return "redirect:/trainers";
+        return "redirect:/admin/trainers";
     }
 
     @PostMapping("/edit/{id}")
@@ -43,13 +43,13 @@ public class TrainerController {
     public String update(@PathVariable Long id, @ModelAttribute("trainerForm") Trainer trainer) {
         trainer.setId(id);
         trainerRepository.save(trainer);
-        return "redirect:/trainers";
+        return "redirect:/admin/trainers";
     }
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable Long id) {
         trainerRepository.deleteById(id);
-        return "redirect:/trainers";
+        return "redirect:/admin/trainers";
     }
 }

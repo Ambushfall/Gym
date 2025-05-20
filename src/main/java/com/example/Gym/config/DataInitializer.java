@@ -83,17 +83,19 @@ public class DataInitializer implements CommandLineRunner {
 
         // 4. Trening sesije
         List<Trainer> trainers = trainerRepository.findAll();
+        List<Member> members = memberRepository.findAll();
         for (int i = 1; i <= 5; i++) {
             TrainingSession session = new TrainingSession();
             session.setTitle("Trening " + i);
             session.setDescription("Opis treninga " + i);
             session.setTrainer(trainers.get(i % trainers.size()));
+            session.setMember(members.get(i % members.size()));
             session.setDate("15." + i + ".2025.");
             trainingSessionRepository.save(session);
         }
 
         // 5. Feedbackovi
-        List<Member> members = memberRepository.findAll();
+
         for (int i = 1; i <= 5; i++) {
             Feedback feedback = new Feedback();
             feedback.setContent("Komentar " + i);

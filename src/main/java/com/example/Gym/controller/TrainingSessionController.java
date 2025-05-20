@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/sessions")
+@RequestMapping("/admin/sessions")
 public class TrainingSessionController {
 
     private final TrainingSessionRepository trainingSessionRepository;
@@ -33,19 +33,19 @@ public class TrainingSessionController {
     @PostMapping("/add")
     public String add(@ModelAttribute("sessionsForm") TrainingSession sessions) {
         trainingSessionRepository.save(sessions);
-        return "redirect:/sessions";
+        return "redirect:/admin/sessions";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable Long id, @ModelAttribute("sessionsForm") TrainingSession sessions) {
         sessions.setId(id);
         trainingSessionRepository.save(sessions);
-        return "redirect:/sessions";
+        return "redirect:/admin/sessions";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         trainingSessionRepository.deleteById(id);
-        return "redirect:/sessions";
+        return "redirect:/admin/sessions";
     }
 }

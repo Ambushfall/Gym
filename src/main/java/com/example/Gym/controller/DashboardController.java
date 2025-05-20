@@ -29,7 +29,7 @@ public class DashboardController {
         model.addAttribute("role", role.toUpperCase());
         model.addAttribute("username", principal.getName());
 
-        switch (role) {
+        switch (role.toUpperCase()) {
             case "MEMBER": {
                 model.addAttribute("trainers", trainerRepository.findAll());
             };
