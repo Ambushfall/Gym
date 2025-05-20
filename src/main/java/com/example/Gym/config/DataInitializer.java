@@ -35,6 +35,7 @@ public class DataInitializer implements CommandLineRunner {
             user.setUsername("user" + i);
             user.setPassword(passwordEncoder.encode("password" + i));
             user.setRole(Role.USER);
+            user.setEmail("user" + i + "@gmail.com");
             userRepository.save(user);
         }
 
@@ -43,6 +44,7 @@ public class DataInitializer implements CommandLineRunner {
         admin.setUsername("admin");
         admin.setPassword(passwordEncoder.encode("admin"));
         admin.setRole(Role.ADMIN);
+        admin.setEmail("admin" + "@gmail.com");
         userRepository.save(admin);
 
         // 2. Treneri
@@ -51,6 +53,7 @@ public class DataInitializer implements CommandLineRunner {
             trainerUser.setUsername("trainer" + i);
             trainerUser.setPassword(passwordEncoder.encode("trainer" + i));
             trainerUser.setRole(Role.TRAINER);
+            trainerUser.setEmail("trainer" + i + "@gym.com");
             userRepository.save(trainerUser);
 
             Trainer trainer = new Trainer();
@@ -66,6 +69,7 @@ public class DataInitializer implements CommandLineRunner {
             memberUser.setUsername("member" + i);
             memberUser.setPassword(passwordEncoder.encode("member" + i));
             memberUser.setRole(Role.MEMBER);
+            memberUser.setEmail("member" + i + "@gym.com");
             userRepository.save(memberUser);
 
             Member member = new Member();
@@ -84,6 +88,7 @@ public class DataInitializer implements CommandLineRunner {
             session.setTitle("Trening " + i);
             session.setDescription("Opis treninga " + i);
             session.setTrainer(trainers.get(i % trainers.size()));
+            session.setDate("15." + i + ".2025.");
             trainingSessionRepository.save(session);
         }
 

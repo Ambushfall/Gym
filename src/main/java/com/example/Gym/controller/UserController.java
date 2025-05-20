@@ -2,6 +2,8 @@ package com.example.Gym.controller;
 
 import com.example.Gym.model.AppUser;
 import com.example.Gym.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -39,6 +44,7 @@ public class UserController {
     @PostMapping("/edit/{id}")
     public String update(@PathVariable Long id, @ModelAttribute("userForm") AppUser user) {
         user.setId(id);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "redirect:/users";
     }
