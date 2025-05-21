@@ -1,6 +1,7 @@
 package com.example.Gym.model;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,22 +16,30 @@ public class Member {
     private String phoneNumber;
     private String membershipType;
 
-    @OneToMany(mappedBy = "member")
-    private List<TrainingSession> sessions;
+    // ✅ Brišu se sa članom
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrainingSession> sessions = new ArrayList<>();
 
+    // ✅ Ovo moraš ručno da očistiš pre delete
     @ManyToMany
     @JoinTable(
             name = "member_liked_trainers",
             joinColumns = @JoinColumn(name = "member_id"),
             inverseJoinColumns = @JoinColumn(name = "trainer_id")
     )
-    private List<Trainer> likedTrainers;
+    private List<Trainer> likedTrainers = new ArrayList<>();
 
-    @OneToOne
+    // ✅ Dodato da automatski briše feedbackove uz člana
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Feedback> feedbacks = new ArrayList<>();
+
+    // ✅ AppUser je vlasnik veze, ovde ide mappedBy
+    @OneToOne(mappedBy = "member")
     private AppUser appUser;
 
-    public Member() {
-    }
+    public Member() {}
+
+    // === GETTERI I SETTERI ===
 
     public Long getId() {
         return id;
@@ -86,6 +95,14 @@ public class Member {
 
     public void setLikedTrainers(List<Trainer> likedTrainers) {
         this.likedTrainers = likedTrainers;
+    }
+
+    public List<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(List<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
     }
 
     public AppUser getAppUser() {

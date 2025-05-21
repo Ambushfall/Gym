@@ -44,15 +44,32 @@
             color: #444;
         }
 
-        a {
-            color: #007bff;
-            text-decoration: none;
-            margin-right: 10px;
+        /* Dugmići */
+        .action-button {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
             font-weight: bold;
+            text-decoration: none;
+            color: white;
+            transition: background-color 0.2s ease;
         }
 
-        a:hover {
-            text-decoration: underline;
+        .edit-btn {
+            background-color: #007bff;
+        }
+
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
         }
 
         hr {
@@ -102,11 +119,11 @@
             background-color: #0056b3;
         }
     </style>
-
 </head>
 <body>
 
 <h2>All Members</h2>
+
 <table border="1">
     <tr>
         <th>ID</th>
@@ -121,17 +138,18 @@
         <td th:text="${member.email}"></td>
         <td th:text="${member.phoneNumber}"></td>
         <td>
-            <a th:href="@{'/admin/members/edit/' + ${member.id}}">Edit</a>
-            <a th:href="@{'/admin/members/delete/' + ${member.id}}" onclick="return confirm('Delete?')">Delete</a>
+            <a th:href="@{'/admin/members/edit/' + ${member.id}}" class="action-button edit-btn">Edit</a>
+            <a th:href="@{'/admin/members/delete/' + ${member.id}}" class="action-button delete-btn" onclick="return confirm('Delete?')">Delete</a>
         </td>
     </tr>
 </table>
 
 <hr>
+
 <h2 th:text="${memberForm.id != null} ? 'Edit Member' : 'Add Member'"></h2>
+
 <form th:action="@{${memberForm.id != null} ? '/admin/members/edit/' + ${memberForm.id} : '/admin/members/add'}"
       th:object="${memberForm}" method="post" class="member-form">
-
 
     <input type="hidden" th:field="*{id}"/>
 
@@ -146,7 +164,6 @@
 
     <button type="submit">💾 Save Member</button>
 </form>
-
 
 </body>
 </html>

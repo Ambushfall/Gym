@@ -18,7 +18,13 @@ public class AppUser {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "trainer_id", referencedColumnName = "id")
+    private Trainer trainer;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "member_id", referencedColumnName = "id")
+    private Member member;
 
     public AppUser() {
     }
@@ -63,6 +69,19 @@ public class AppUser {
     public void setRole(Role role) {
         this.role = role;
     }
+    public Trainer getTrainer() {
+        return trainer;
+    }
 
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
+    }
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
 
 }

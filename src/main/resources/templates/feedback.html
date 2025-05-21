@@ -1,31 +1,164 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Feedback Management</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback Management</title>
+
+    <style>
+        * {
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f5f5f5;
+          padding: 30px;
+          margin: 0;
+        }
+
+        h2 {
+          color: #333;
+          margin-bottom: 20px;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          background-color: white;
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+          margin-bottom: 40px;
+        }
+
+        th, td {
+          border: 1px solid #ccc;
+          padding: 10px 14px;
+          text-align: left;
+        }
+
+        th {
+          background-color: #e9e9e9;
+          font-weight: bold;
+          color: #333;
+        }
+
+        td {
+          color: #444;
+        }
+
+        .action-button {
+          display: inline-block;
+          padding: 6px 12px;
+          border-radius: 4px;
+          font-size: 14px;
+          font-weight: bold;
+          text-decoration: none;
+          color: white;
+          transition: background-color 0.2s ease;
+        }
+
+        .edit-btn {
+          background-color: #007bff;
+        }
+
+        .edit-btn:hover {
+          background-color: #0056b3;
+        }
+
+        .delete-btn {
+          background-color: #dc3545;
+        }
+
+        .delete-btn:hover {
+          background-color: #c82333;
+        }
+
+        hr {
+          margin: 50px 0;
+          border: none;
+          border-top: 1px solid #ddd;
+        }
+
+        .feedback-form {
+          background-color: white;
+          padding: 25px;
+          border-radius: 8px;
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+          max-width: 500px;
+        }
+
+        .feedback-form label {
+          display: block;
+          margin-top: 12px;
+          font-weight: bold;
+          color: #444;
+        }
+
+        .feedback-form input {
+          width: 100%;
+          padding: 8px 10px;
+          margin-top: 5px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+
+        .feedback-form button {
+          margin-top: 20px;
+          width: 100%;
+          padding: 10px;
+          background-color: #28a745;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          font-weight: bold;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        .feedback-form button:hover {
+          background-color: #218838;
+        }
+
+    </style>
+</head>
+
 <body>
 
 <h2>All Feedback</h2>
-<table border="1">
+<table>
     <tr>
-        <th>ID</th><th>Content</th><th>Rating</th><th>Actions</th>
+        <th>ID</th>
+        <th>Content</th>
+        <th>Rating</th>
+        <th>Actions</th>
     </tr>
     <tr th:each="feedback : ${feedbacks}">
         <td th:text="${feedback.id}"></td>
         <td th:text="${feedback.content}"></td>
         <td th:text="${feedback.rating}"></td>
         <td>
-            <a th:href="@{'/admin/feedback/edit/' + ${feedback.id}}">Edit</a>
-            <a th:href="@{'/admin/feedback/delete/' + ${feedback.id}}" onclick="return confirm('Delete?')">Delete</a>
+            <a th:href="@{'/admin/feedback/edit/' + ${feedback.id}}" class="action-button edit-btn">Edit</a>
+            <a th:href="@{'/admin/feedback/delete/' + ${feedback.id}}"
+               class="action-button delete-btn"
+               onclick="return confirm('Delete?')">Delete</a>
         </td>
     </tr>
 </table>
 
 <hr>
+
 <h2 th:text="${feedbackForm.id != null} ? 'Edit Feedback' : 'Add Feedback'"></h2>
-<form th:action="@{${feedbackForm.id != null} ? '/feedback/edit/' + ${feedbackForm.id} : '/feedback/add'}" th:object="${feedbackForm}" method="post">
+<form th:action="@{${feedbackForm.id != null} ? '/admin/feedback/edit/' + ${feedbackForm.id} : '/admin/feedback/add'}"
+      th:object="${feedbackForm}" method="post" class="feedback-form">
+
     <input type="hidden" th:field="*{id}" />
-    <label>Content:</label><input type="text" th:field="*{content}" required/><br/>
-    <label>Rating:</label><input type="number" th:field="*{rating}" required/><br/>
-    <button type="submit">Save</button>
+
+    <label for="content">Content:</label>
+    <input id="content" type="text" th:field="*{content}" required />
+
+    <label for="rating">Rating:</label>
+    <input id="rating" type="number" th:field="*{rating}" min="1" max="5" required />
+
+    <button type="submit">💾 Save Feedback</button>
 </form>
 
 </body>

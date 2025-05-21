@@ -1,5 +1,4 @@
 package com.example.Gym.model;
-
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -19,8 +18,8 @@ public class Trainer {
     @ManyToMany(mappedBy = "likedTrainers")
     private List<Member> likedByMembers;
 
-    @OneToOne
-    private AppUser appUser; // ✅ Dodato za povezivanje sa login korisnikom
+    @OneToOne(mappedBy = "trainer")
+    private AppUser appUser;
 
     public Trainer() {
     }

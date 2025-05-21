@@ -82,6 +82,33 @@
         hr {
             margin: 40px 0;
         }
+        .action-button {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+
+.edit-btn {
+    background-color: #007bff;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
     </style>
 </head>
 <body>
@@ -106,9 +133,10 @@
         <td th:text="${user.role}"></td>
 
         <td>
-            <a th:href="@{'/admin/users/edit/' + ${user.id}}">Edit</a>
-            <a th:href="@{'/admin/users/delete/' + ${user.id}}" onclick="return confirm('Delete?')">Delete</a>
+            <a th:href="@{'/admin/users/edit/' + ${user.id}}" class="action-button edit-btn">Edit</a>
+            <a th:href="@{'/admin/users/delete/' + ${user.id}}" class="action-button delete-btn" onclick="return confirm('Delete?')">Delete</a>
         </td>
+
     </tr>
     </tbody>
 </table>

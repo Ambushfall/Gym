@@ -3,152 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <style><style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        padding: 30px;
-    }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 30px;
+        }
 
-    h1, h2, h3 {
-        color: #333;
-        margin-bottom: 10px;
-    }
+        h1, h2, h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 25px;
-        background-color: #fff;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+        }
 
-    th, td {
-        padding: 10px 14px;
-        border: 1px solid #ccc;
-        text-align: left;
-    }
+        th, td {
+            padding: 10px 14px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
 
-    th {
-        background-color: #e0e0e0;
-        color: #333;
-    }
+        th {
+            background-color: #e0e0e0;
+            color: #333;
+        }
 
-    ul {
-        list-style-type: disc;
-        padding-left: 20px;
-    }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
 
-    li {
-        margin-bottom: 8px;
-    }
+        li {
+            margin-bottom: 8px;
+        }
 
-    form {
-        display: inline;
-    }
+        form {
+            display: inline;
+        }
 
-    button {
-        padding: 5px 10px;
-        border: none;
-        cursor: pointer;
-        border-radius: 4px;
-        margin-right: 4px;
-    }
+        button {
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 4px;
+        }
 
-    button[type="submit"]:first-of-type {
-        background-color: #28a745;
-        color: white;
-    }
+        button[type="submit"]:first-of-type {
+            background-color: #28a745;
+            color: white;
+        }
 
-    button[type="submit"]:last-of-type {
-        background-color: #dc3545;
-        color: white;
-    }
+        button[type="submit"]:last-of-type {
+            background-color: #dc3545;
+            color: white;
+        }
 
-    a {
-        color: #007bff;
-        text-decoration: none;
-    }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
 
-    a:hover {
-        text-decoration: underline;
-    }
+        a:hover {
+            text-decoration: underline;
+        }
 
-    hr {
-        margin: 40px 0;
-    }
+        hr {
+            margin: 40px 0;
+        }
 
-    .logout {
-        margin-top: 20px;
-    }
+        .logout-box {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .logout-button {
+            display: inline-block;
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
+        }
 
         .admin-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin-top: 20px;
-}
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
 
-.admin-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 6px;
-    width: 220px;
+        .admin-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            width: 220px;
+            text-align: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .admin-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .welcome-box {
+            background-color: #ffffff;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .welcome-box h1 {
+            margin: 0;
+            font-size: 26px;
+            color: #333;
+        }
+
+        .role-text {
+            font-size: 18px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* MEMBER STILOVI */
+        .trainer-table {
+            width: 90%;
+            margin: 0 auto 40px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .trainer-table th,
+        .trainer-table td {
+            padding: 12px 16px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .trainer-table th {
+            background-color: #e8e8e8;
+            font-weight: bold;
+        }
+
+        .like-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .unlike-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .like-btn:hover {
+            background-color: #218838;
+        }
+
+        .unlike-btn:hover {
+            background-color: #c82333;
+        }
+        .centered-title {
     text-align: center;
-    transition: background-color 0.2s ease;
-}
-
-.admin-btn:hover {
-    background-color: #0056b3;
-}
-.welcome-box {
-    background-color: #ffffff;
-    padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
-
-.welcome-box h1 {
-    margin: 0;
     font-size: 26px;
     color: #333;
-}
-
-.role-text {
-    font-size: 18px;
-    color: #666;
-    margin-top: 8px;
-}
-.logout-box {
-    text-align: center;
-    margin-top: 40px;
-}
-
-.logout-button {
-    display: inline-block;
-    background-color: #dc3545;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-weight: bold;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 15px;
     border-radius: 6px;
-    transition: background-color 0.2s ease;
-}
-
-.logout-button:hover {
-    background-color: #c82333;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
     </style>
-
 </head>
 <body>
 
@@ -159,8 +221,7 @@
 
 <div th:switch="${role}">
 
-    <!-- ADMIN SEKCIONI SADRŽAJ -->
-    <!-- ADMIN SEKCIONI SADRŽAJ -->
+    <!-- ADMIN PANEL -->
     <div th:case="'ADMIN'" style="text-align: center;">
         <h3>ADMIN PANEL</h3>
         <div class="admin-buttons">
@@ -172,13 +233,11 @@
         </div>
     </div>
 
-
-    <!-- ======================= TRAINER PANEL ======================= -->
+    <!-- TRAINER PANEL -->
     <div th:case="'TRAINER'">
         <h2>Trener – Moje trening sesije</h2>
-        <table border="1">
+        <table>
             <tr>
-                <!-- <th>ID</th> -->
                 <th>Title</th>
                 <th>Description</th>
                 <th>Date</th>
@@ -186,7 +245,6 @@
                 <th>Trainer's name</th>
             </tr>
             <tr th:each="s : ${sessions}">
-                <!-- <td th:text="${s.id}"></td> -->
                 <td th:text="${s.title}"></td>
                 <td th:text="${s.description}"></td>
                 <td th:text="${s.date}"></td>
@@ -204,18 +262,16 @@
         </ul>
     </div>
 
-    <!-- ======================= MEMBER PANEL ======================= -->
-    <!-- ======================= MEMBER PANEL ======================= -->
+    <!-- MEMBER PANEL -->
     <div th:case="'MEMBER'">
+        <h2 class="centered-title">📋 Svi dostupni treneri</h2>
 
-        <h2>Svi dostupni treneri</h2>
-        <table border="1">
+        <table class="trainer-table">
             <thead>
             <tr>
                 <th>ID</th>
                 <th>Ime</th>
                 <th>Specijalizacija</th>
-                <th>Email</th>
                 <th>Akcija</th>
             </tr>
             </thead>
@@ -224,26 +280,24 @@
                 <td th:text="${t.id}"></td>
                 <td th:text="${t.name}"></td>
                 <td th:text="${t.specialization}"></td>
-                <td th:text="${t.appUser != null ? t.appUser.email : ''}"></td>
                 <td>
                     <form th:action="@{'/member/like/' + ${t.id}}" method="post" style="display:inline">
-                        <button type="submit">❤️ Lajkuj</button>
+                        <button type="submit" class="like-btn">❤️ Lajkuj</button>
                     </form>
                     <form th:action="@{'/member/unlike/' + ${t.id}}" method="post" style="display:inline">
-                        <button type="submit">💔 Ukloni</button>
+                        <button type="submit" class="unlike-btn">💔 Ukloni</button>
                     </form>
                 </td>
-
             </tr>
             </tbody>
         </table>
-
     </div>
 
-
+    <!-- LOGOUT -->
     <div class="logout-box">
         <a th:href="@{/logout}" class="logout-button">🚪 Odjavi se</a>
     </div>
 </div>
+
 </body>
 </html>
